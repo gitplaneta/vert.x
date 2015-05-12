@@ -116,6 +116,12 @@
       <artifactId>vertx-docgen</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.14.4</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- Testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -142,6 +148,7 @@
               <id>default-compile</id>
               <configuration>
                 <annotationProcessors>
+                  <annotationProcessor>lombok.core.AnnotationProcessor</annotationProcessor>
                   <annotationProcessor>io.vertx.docgen.JavaDocGenProcessor</annotationProcessor>
                   <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
                 </annotationProcessors>

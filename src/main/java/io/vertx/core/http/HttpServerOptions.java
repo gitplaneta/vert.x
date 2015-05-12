@@ -19,18 +19,16 @@ package io.vertx.core.http;
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.net.JksOptions;
-import io.vertx.core.net.PemTrustOptions;
-import io.vertx.core.net.PemKeyCertOptions;
-import io.vertx.core.net.NetServerOptions;
-import io.vertx.core.net.PfxOptions;
-import io.vertx.core.net.TCPSSLOptions;
+import io.vertx.core.net.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Represents options used by an {@link io.vertx.core.http.HttpServer} instance
  *
  * @author <a href="http://tfox.org">Tim Fox</a>
  */
+@EqualsAndHashCode(callSuper=true)
 @DataObject
 public class HttpServerOptions extends NetServerOptions {
 
@@ -49,8 +47,11 @@ public class HttpServerOptions extends NetServerOptions {
    */
   public static final int DEFAULT_MAX_WEBSOCKET_FRAME_SIZE = 65536;
 
+  @Getter
   private boolean compressionSupported;
+  @Getter
   private int maxWebsocketFrameSize;
+  @Getter
   private String websocketSubProtocols;
 
   /**
@@ -214,13 +215,6 @@ public class HttpServerOptions extends NetServerOptions {
   }
 
   /**
-   * @return true if the server supports compression
-   */
-  public boolean isCompressionSupported() {
-    return compressionSupported;
-  }
-
-  /**
    * Set whether the server supports compression
    *
    * @param compressionSupported true if compression supported
@@ -229,13 +223,6 @@ public class HttpServerOptions extends NetServerOptions {
   public HttpServerOptions setCompressionSupported(boolean compressionSupported) {
     this.compressionSupported = compressionSupported;
     return this;
-  }
-
-  /**
-   * @return  the maximum websocket framesize
-   */
-  public int getMaxWebsocketFrameSize() {
-    return maxWebsocketFrameSize;
   }
 
   /**
@@ -259,41 +246,10 @@ public class HttpServerOptions extends NetServerOptions {
     websocketSubProtocols = subProtocols;
     return this;
   }
-
-  /**
-   * @return Get the websocket subprotocols
-   */
-  public String getWebsocketSubProtocols() {
-    return websocketSubProtocols;
-  }
   
   @Override
   public HttpServerOptions setClientAuthRequired(boolean clientAuthRequired) {
     super.setClientAuthRequired(clientAuthRequired);
     return this;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof HttpServerOptions)) return false;
-    if (!super.equals(o)) return false;
-
-    HttpServerOptions that = (HttpServerOptions) o;
-
-    if (compressionSupported != that.compressionSupported) return false;
-    if (maxWebsocketFrameSize != that.maxWebsocketFrameSize) return false;
-    if (websocketSubProtocols != that.websocketSubProtocols) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = super.hashCode();
-    result = 31 * result + (compressionSupported ? 1 : 0);
-    result = 31 * result + maxWebsocketFrameSize;
-    result = 31 * result + (websocketSubProtocols != null ? websocketSubProtocols.hashCode() : 0);
-    return result;
   }
 }
